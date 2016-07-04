@@ -9,7 +9,8 @@
 import Foundation
 
 // Size of the matrix
-let size = 10
+let rowSize = 10
+let columnSize = 10
 
 // Shifts to find row and column of neighbouring cells
 let shifts = [-1, 0, 1]
@@ -20,16 +21,16 @@ func step2(before: [[Bool]]) -> [[Bool]] {
     var after: [[Bool]] = []
     
     // Initialising the 'after' grid/matrix
-    for row in 0..<size {
+    for row in 0..<rowSize {
         after.append([])
-        for _ in 0..<size {
+        for _ in 0..<columnSize {
             after[row].append(false)
         }
     }
     
     //
-    for row in 0..<size {
-        for column in 0..<size {
+    for row in 0..<rowSize {
+        for column in 0..<columnSize {
             let cellNeighbours = neighbours((row, column))
             let numberOfNeighboursAlive = countNeighboursAlive(before, cellNeighbours: cellNeighbours)
             switch numberOfNeighboursAlive {
@@ -71,15 +72,15 @@ func neighbours(cellCoordinates: (Int, Int)) -> [(Int, Int)]{
             if !(xShift == 0 && yShift == 0) {
                 
                 // Handling wrapping for cells along the edges
-                var neighbouringColumn = (cellCoordinates.1 + xShift) % size
+                var neighbouringColumn = (cellCoordinates.1 + xShift) % columnSize
                 if neighbouringColumn == -1 {
-                    neighbouringColumn += size
+                    neighbouringColumn += columnSize
                 }
                 
                 // Handling wrapping for cells along the edges
-                var neighbouringRow = (cellCoordinates.0 + yShift) % size
+                var neighbouringRow = (cellCoordinates.0 + yShift) % rowSize
                 if neighbouringRow == -1 {
-                    neighbouringRow += size
+                    neighbouringRow += rowSize
                 }
                 
                 // Appending neighbouring cells to array
@@ -94,8 +95,9 @@ func neighbours(cellCoordinates: (Int, Int)) -> [(Int, Int)]{
 /*
 -------------------------------PROBLEM 3-------------------------------
  
-// Size of the matrix
-let size = 10
+ // Size of the matrix
+ let rowSize = 3
+ let columnSize = 4
  
 // Shifts to find row and column of neighbouring cells
 let shifts = [-1, 0, 1]
@@ -106,15 +108,15 @@ func step(before: [[Bool]]) -> [[Bool]] {
     var after: [[Bool]] = []
  
     // Initialising the 'after' grid/matrix
-    for row in 0..<size {
+    for row in 0..<rowSize {
         after.append([])
-        for _ in 0..<size {
+        for _ in 0..<columnSize {
             after[row].append(false)
         }
     }
  
-    for row in 0..<size {
-        for column in 0..<size {
+    for row in 0..<rowSize {
+        for column in 0..<columnSize {
             let numberOfNeighbours = countNeighboursAlive(before, row: row, column: column)
             switch numberOfNeighbours {
             // Cell state unchanged
@@ -142,15 +144,15 @@ func countNeighboursAlive(cellGrid: [[Bool]], row: Int, column: Int) -> Int {
             if !(xShift == 0 && yShift == 0) {
  
                 // Handling wrapping for cells along the edges
-                var neighbouringColumn = (column + xShift) % size
+                var neighbouringColumn = (column + xShift) % columnSize
                 if neighbouringColumn == -1 {
-                    neighbouringColumn += size
+                    neighbouringColumn += columnSize
                 }
  
                 // Handling wrapping for cells along the edges
-                var neighbouringRow = (row + yShift) % size
+                var neighbouringRow = (row + yShift) % rowSize
                 if neighbouringRow == -1 {
-                    neighbouringRow += size
+                    neighbouringRow += rowSize
                 }
  
                 // Add count if neighbouring cell is alive

@@ -34,9 +34,9 @@ class Problem2ViewController: UIViewController {
         var before: [[Bool]] = []
         
         // Initialising the 'before' grid/matrix
-        for row in 0..<size {
+        for row in 0..<rowSize {
             before.append([])
-            for _ in 0..<size {
+            for _ in 0..<columnSize {
                 if arc4random_uniform(3) == 1 {
                     // Set current cell to alive
                     before[row].append(true)
@@ -61,8 +61,8 @@ class Problem2ViewController: UIViewController {
     // Counts number of cells alive in a grid
     func countLivingCells(cellGrid: [[Bool]]) -> Int {
         var cellsAlive = 0
-        for row in 0..<size {
-            for column in 0..<size {
+        for row in 0..<rowSize {
+            for column in 0..<columnSize {
                 if(cellGrid[row][column] == true) {
                     cellsAlive += 1
                 }
@@ -70,6 +70,7 @@ class Problem2ViewController: UIViewController {
         }
         return cellsAlive
     }
+}
     
 /*-------------------------------PROBLEM 2-------------------------------
      
@@ -80,10 +81,10 @@ class Problem2ViewController: UIViewController {
         var after: [[Bool]] = []
      
         // Initialising the 'before' and 'after' grids/ matrices
-        for row in 0..<size {
+        for row in 0..<rowSize {
             before.append([])
             after.append([])
-            for _ in 0..<size {
+            for _ in 0..<columnSize {
                 if arc4random_uniform(3) == 1 {
                     // set current cell to alive
                     before[row].append(true)
@@ -99,8 +100,8 @@ class Problem2ViewController: UIViewController {
         let aliveBefore = countLivingCells(before)
         displayText.text = displayText.text + "\nThe number of cells alive before is \(aliveBefore)."
      
-        for row in 0..<size {
-            for column in 0..<size {
+        for row in 0..<rowSize {
+            for column in 0..<columnSize {
                 let numberOfNeighbours = countNeighbours(before, row: row, column: column)
                 switch numberOfNeighbours {
                 case 2:
@@ -121,8 +122,8 @@ class Problem2ViewController: UIViewController {
      // Counts number of cells alive in a grid
      func countLivingCells(cellGrid: [[Bool]]) -> Int {
         var cellsAlive = 0
-        for row in 0..<size {
-            for column in 0..<size {
+        for row in 0..<rowSize {
+            for column in 0..<columnSize {
                 if(cellGrid[row][column] == true) {
                     cellsAlive += 1
                 }
@@ -140,15 +141,15 @@ class Problem2ViewController: UIViewController {
                 if !(xShift == 0 && yShift == 0) {
                     
                     // Handling wrapping for cells along the edges
-                    var neighbouringColumn = (column + xShift) % size
+                    var neighbouringColumn = (column + xShift) % columnSize
                     if neighbouringColumn == -1 {
-                        neighbouringColumn += size
+                        neighbouringColumn += columnSize
                     }
                     
                     // Handling wrapping for cells along the edges
-                    var neighbouringRow = (row + yShift) % size
+                    var neighbouringRow = (row + yShift) % rowSize
                     if neighbouringRow == -1 {
-                        neighbouringRow += size
+                        neighbouringRow += rowSize
                     }
             
                     // Add count if neighbouring cell is alive
@@ -161,5 +162,3 @@ class Problem2ViewController: UIViewController {
         return numberOfNeigbours
      }
 */
-    
-}
