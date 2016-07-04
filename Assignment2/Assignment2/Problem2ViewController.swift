@@ -12,6 +12,7 @@ class Problem2ViewController: UIViewController {
 
     @IBOutlet weak var displayText: UITextView!
     
+    // NIT: Jp comment -- good use of comments
     // Shifts to find row and column of neighbouring cells
     let shifts = [-1, 0, 1]
     
@@ -28,6 +29,8 @@ class Problem2ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    // NIT: Jp Comment - Two things: 1) One useful thing is to add something like the mark (see below) comment to help arrange things in XCode. Add something like that in your code and look at it in xcode to navigate through the code. Secondly, we usually group the UI Methods together and put internal methods together. Again, these are style things.
+    // MARK: - UI Elements
     @IBAction func runClicked(sender: AnyObject) {
         
         // Defining the 'before' cell grid
@@ -37,6 +40,7 @@ class Problem2ViewController: UIViewController {
         for row in 0..<size {
             before.append([])
             for _ in 0..<size {
+                // NIT: This could be simplified. before[row].append(arc4random_uniform(3) == 1)
                 if arc4random_uniform(3) == 1 {
                     // Set current cell to alive
                     before[row].append(true)
