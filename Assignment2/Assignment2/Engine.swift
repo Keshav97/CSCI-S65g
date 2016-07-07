@@ -20,7 +20,8 @@ let shifts = [-1, 0, 1]
 
 
 // -------------------------------PROBLEM 3-------------------------------
- 
+
+// Accepts the 'before' grid/matrix and calculates and returns the 'after' grid/matrix
 func step(before: [[Bool]]) -> [[Bool]] {
     
     // Defining the 'after' cell grid
@@ -89,6 +90,7 @@ func countNeighboursAlive(cellGrid: [[Bool]], row: Int, column: Int) -> Int {
 
 // -------------------------------PROBLEM 4-------------------------------
 
+// Accepts the 'before' grid/matrix and calculates and returns the 'after' grid/matrix
 func step2(before: [[Bool]]) -> [[Bool]] {
     
     // Defining the 'after' cell grid
