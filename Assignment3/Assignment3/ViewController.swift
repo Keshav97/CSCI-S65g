@@ -10,6 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    // IBOutlet
     @IBOutlet weak var gridView: GridView!
     
     override func viewDidLoad() {
@@ -22,6 +23,7 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    // IBAction: Updates the grid to the next step
     @IBAction func nextStep(sender: AnyObject) {
         let step = Step()
         gridView.grid = step.step2(gridView.grid, rowSize: gridView.rows, columnSize: gridView.cols)

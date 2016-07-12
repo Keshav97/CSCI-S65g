@@ -10,10 +10,6 @@ import Foundation
 
 class Step {
     
-    //    // Size of the matrix
-    //    let rowSize = 10
-    //    let columnSize = 10
-    
     // Shifts to find row and column of neighbouring cells
     let shifts = [-1, 0, 1]
     
@@ -32,13 +28,14 @@ class Step {
             }
         }
         
-        //
+        // Stores the states of the cells in the next step in the 'after' matrix/grid
         for row in 0..<rowSize {
             for column in 0..<columnSize {
                 let cellNeighbours = neighbours((row, column), rowSize: rowSize, columnSize: columnSize)
                 let numberOfNeighboursAlive = countNeighboursAlive2(before, cellNeighbours: cellNeighbours)
                 switch numberOfNeighboursAlive {
-                // Cell state unchanged
+                    
+                // Cell state unchanged i.e Alive -> Alive, Dead -> Dead
                 case 2:
                     switch before[row][column] {
                     case .Born, .Living:
@@ -46,7 +43,7 @@ class Step {
                     case .Died, .Empty:
                         after[row][column] = .Empty
                     }
-                // Cell reproduction
+                // Cell reproduction i.e Alive -> Alive, Dead -> Alive
                 case 3:
                     switch before[row][column] {
                     case .Born, .Living:
@@ -54,7 +51,7 @@ class Step {
                     case .Died, .Empty:
                         after[row][column] = .Born
                     }
-                // Cell death: overcrowding/undercrowding
+                // Cell death: overcrowding/undercrowding i.e Alive -> Dead, Dead -> Dead
                 default:
                     switch before[row][column] {
                     case .Born, .Living:
@@ -109,6 +106,4 @@ class Step {
         }
         return neighbouringCells
     }
-    
-    
 }
