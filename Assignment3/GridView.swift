@@ -125,46 +125,24 @@ enum CellState: String {
     
     
     
-//    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-//        for touch in touches {
-//            self.makeTouch(touch)
-//        }
-//    }
-//    
-//    func makeTouch(touch: UITouch) {
-//        let point = touch.locationInView(self)
-//        let cellHeight = (bounds.height) / CGFloat(rows)
-//        let cellWidth = (bounds.width) / CGFloat(cols)
-//        let cellX = Int(CGFloat(point.x) / cellWidth)
-//        let cellY = Int(CGFloat(point.y) / cellHeight)
-//        
-//        if cellX < cols && cellY < rows && cellX >= 0 && cellY >= 0 {
-//            grid[cellX][cellY] = CellState.toggle(grid[cellX][cellY])
-//        }
-//        let updatedGrid = CGRect(x: CGFloat(cellX) * cellWidth, y: CGFloat(cellY) * cellHeight, width: cellWidth, height: cellHeight)
-//        self.setNeedsDisplayInRect(updatedGrid)
-//
-//    }
-
-    
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
         for touch in touches {
-            self.processTouch(touch)
+            self.makeTouch(touch)
         }
     }
     
-    func processTouch(touch: UITouch) {
+    func makeTouch(touch: UITouch) {
         let point = touch.locationInView(self)
-        let cellWidth = Double(bounds.width) / Double(rows)
-        let cellHeight = Double(bounds.height) / Double(cols)
-        let xCo = Int(floor(Double(point.x) / cellWidth))
-        let yCo = Int(floor(Double(point.y) / cellHeight))
+        let cellHeight = (bounds.height) / CGFloat(rows)
+        let cellWidth = (bounds.width) / CGFloat(cols)
+        let cellX = Int(CGFloat(point.x) / cellWidth)
+        let cellY = Int(CGFloat(point.y) / cellHeight)
         
-        if xCo <= rows-1 && yCo <= cols-1 && xCo >= 0 && yCo >= 0 {
-            grid[xCo][yCo] = CellState.toggle(grid[xCo][yCo])
+        if cellX < cols && cellY < rows && cellX >= 0 && cellY >= 0 {
+            grid[cellY][cellX] = CellState.toggle(grid[cellY][cellX])
         }
-        let gridToBeChanged = CGRect(x: CGFloat(Double(xCo) * cellWidth), y: CGFloat(Double(yCo) * cellHeight), width: CGFloat(cellWidth), height: CGFloat(cellHeight))
-        self.setNeedsDisplayInRect(gridToBeChanged)
-    }
+        let updatedGrid = CGRect(x: CGFloat(cellX) * cellWidth, y: CGFloat(cellY) * cellHeight, width: cellWidth, height: cellHeight)
+        self.setNeedsDisplayInRect(updatedGrid)
 
+    }
 }
