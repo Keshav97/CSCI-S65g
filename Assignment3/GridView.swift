@@ -7,12 +7,37 @@
 //
 
 import UIKit
+import Foundation
+
+enum CellState: String {
+    case Living = "Living"
+    case Empty = "Empty"
+    case Born = "Born"
+    case Died = "Died"
+    
+    func description() -> String {
+        return self.rawValue
+    }
+    
+    static func allValues() -> [CellState] {
+        return [.Living, .Empty, .Born, .Died]
+    }
+    
+    static func toggle(value: CellState) -> CellState {
+        switch value {
+        case .Empty, .Died:
+            return .Living
+        case .Living, .Born:
+            return .Empty
+        }
+    }
+}
 
 @IBDesignable class GridView: UIView {
     
     @IBInspectable var rows: Int = 20 {
         didSet {
-            var copyArray = [[CellState]]()
+            var copyArray: [[CellState]] = []
             for row in 0..<rows {
                 copyArray.append([])
                 for _ in 0..<cols {
@@ -24,7 +49,7 @@ import UIKit
     }
     @IBInspectable var cols: Int = 20 {
         didSet {
-            var copyArray = [[CellState]]()
+            var copyArray: [[CellState]] = []
             for row in 0..<rows {
                 copyArray.append([])
                 for _ in 0..<cols {
@@ -39,11 +64,9 @@ import UIKit
     @IBInspectable var bornColor: UIColor = UIColor.blueColor()
     @IBInspectable var diedColor: UIColor = UIColor.brownColor()
     @IBInspectable var gridColor: UIColor = UIColor.blackColor()
-    @IBInspectable var gridWidth: CGFloat = 5.0
+    @IBInspectable var gridWidth: CGFloat = 3.0
     
     var grid = [[CellState]]()
-    
-    
     
     override func drawRect(rect: CGRect) {
         
@@ -100,13 +123,48 @@ import UIKit
         }
     }
     
+    
+    
+//    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+//        for touch in touches {
+//            self.makeTouch(touch)
+//        }
+//    }
+//    
+//    func makeTouch(touch: UITouch) {
+//        let point = touch.locationInView(self)
+//        let cellHeight = (bounds.height) / CGFloat(rows)
+//        let cellWidth = (bounds.width) / CGFloat(cols)
+//        let cellX = Int(CGFloat(point.x) / cellWidth)
+//        let cellY = Int(CGFloat(point.y) / cellHeight)
+//        
+//        if cellX < cols && cellY < rows && cellX >= 0 && cellY >= 0 {
+//            grid[cellX][cellY] = CellState.toggle(grid[cellX][cellY])
+//        }
+//        let updatedGrid = CGRect(x: CGFloat(cellX) * cellWidth, y: CGFloat(cellY) * cellHeight, width: cellWidth, height: cellHeight)
+//        self.setNeedsDisplayInRect(updatedGrid)
+//
+//    }
 
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        for touch in touches {
+            self.processTouch(touch)
+        }
     }
-    */
+    
+    func processTouch(touch: UITouch) {
+        let point = touch.locationInView(self)
+        let cellWidth = Double(bounds.width) / Double(rows)
+        let cellHeight = Double(bounds.height) / Double(cols)
+        let xCo = Int(floor(Double(point.x) / cellWidth))
+        let yCo = Int(floor(Double(point.y) / cellHeight))
+        
+        if xCo <= rows-1 && yCo <= cols-1 && xCo >= 0 && yCo >= 0 {
+            grid[xCo][yCo] = CellState.toggle(grid[xCo][yCo])
+        }
+        let gridToBeChanged = CGRect(x: CGFloat(Double(xCo) * cellWidth), y: CGFloat(Double(yCo) * cellHeight), width: CGFloat(cellWidth), height: CGFloat(cellHeight))
+        self.setNeedsDisplayInRect(gridToBeChanged)
+    }
 
 }

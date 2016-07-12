@@ -10,6 +10,8 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var gridView: GridView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -20,6 +22,11 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    @IBAction func nextStep(sender: AnyObject) {
+        let step = Step()
+        gridView.grid = step.step2(gridView.grid, rowSize: gridView.rows, columnSize: gridView.cols)
+        gridView.setNeedsDisplay()
+    }
 
 }
 

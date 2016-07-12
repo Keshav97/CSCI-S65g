@@ -21,7 +21,6 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Ub-j9-mfz" customClass="GridView" customModule="Assignment3" customModuleProvider="target">
                                 <rect key="frame" x="60" y="60" width="480" height="480"/>
-                                <color key="backgroundColor" red="0.23137254901960785" green="0.67843137254901964" blue="0.9882352941176471" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="0Ub-j9-mfz" secondAttribute="height" multiplier="1:1" id="mth-Hj-xwC"/>
                                 </constraints>
@@ -53,12 +52,21 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YDp-iU-aJv">
-                                <rect key="frame" x="285" y="560" width="30" height="30"/>
+                                <rect key="frame" x="284" y="560" width="32" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="H5h-9N-Mpm"/>
                                     <constraint firstAttribute="width" constant="30" id="IzI-E0-1wQ"/>
+                                    <constraint firstAttribute="width" constant="32" id="MGM-4n-4Yd"/>
                                 </constraints>
-                                <state key="normal" title="Run"/>
+                                <state key="normal" title="Step"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="IzI-E0-1wQ"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <action selector="nextStep:" destination="BYZ-38-t0r" eventType="touchUpInside" id="S7z-yh-aFm"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -73,6 +81,9 @@
                             <constraint firstItem="0Ub-j9-mfz" firstAttribute="height" relation="lessThanOrEqual" secondItem="8bC-Xf-vdC" secondAttribute="height" multiplier="0.8" id="k17-JD-USK"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="gridView" destination="0Ub-j9-mfz" id="wjw-xm-Mrb"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
