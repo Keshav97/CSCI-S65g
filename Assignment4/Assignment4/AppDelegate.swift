@@ -6,6 +6,18 @@
 //  Copyright © 2016 Harvard Summer School. All rights reserved.
 //
 
+/*
+Icons:
+ App Icon: https://thenounproject.com/term/conways-game-of-life/14951/
+ Licence: Public Domain (https://creativecommons.org/publicdomain/zero/1.0/)
+ 
+ Tab View Icons: https://icons8.com/web-app/for/all/design
+                 https://icons8.com/web-app/for/all/registry
+                 https://icons8.com/web-app/for/all/combo%20chart
+ Licence: https://icons8.com/license/
+*/
+
+
 import UIKit
 
 @UIApplicationMain

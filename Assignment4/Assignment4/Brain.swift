@@ -50,16 +50,16 @@ class StandardEngine: EngineProtocol {
         didSet {
             if let delegate = delegate {
                 delegate.engineDidUpdate(grid)
-                NSNotificationCenter.defaultCenter().postNotificationName("gridModifiedNotification", object: self)
             }
+            NSNotificationCenter.defaultCenter().postNotificationName("gridModifyNotification", object: nil, userInfo: ["Notification" : Grid.self])
         }
     }
     var cols: Int {
         didSet {
             if let delegate = delegate {
                 delegate.engineDidUpdate(grid)
-                NSNotificationCenter.defaultCenter().postNotificationName("gridModifiedNotification", object: self)
             }
+            NSNotificationCenter.defaultCenter().postNotificationName("gridModifyNotification", object: nil, userInfo: ["Notification" : Grid.self])
         }
     }
     

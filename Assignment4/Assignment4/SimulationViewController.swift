@@ -8,18 +8,23 @@
 
 import UIKit
 
-class SimulationViewController: UIViewController {
+class SimulationViewController: UIViewController, EngineDelegateProtocol {
 
+    var instance: EngineProtocol!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        instance = StandardEngine.sharedInstance
+        instance.delegate = self
+        
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    func engineDidUpdate(withGrid: GridProtocol) {
+        
     }
 
-
+    @IBAction func stepClicked(sender: UIButton) {
+        
+    }
 }
 

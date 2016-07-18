@@ -20,6 +20,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view alpha="0.10000000149011612" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PdX-It-h49">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" red="0.23921568630000001" green="0.4549019608" blue="0.94901960780000005" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fdN-x7-V9m">
                                 <rect key="frame" x="0.0" y="20" width="600" height="531"/>
                                 <subviews>
@@ -188,15 +192,31 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" red="0.23921568627450981" green="0.45882352941176469" blue="0.94901960784313721" alpha="0.10000000000000001" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="4ug-Mw-9AY" firstAttribute="top" secondItem="fdN-x7-V9m" secondAttribute="bottom" id="F5L-hb-Q2W"/>
                             <constraint firstItem="fdN-x7-V9m" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" id="FPW-E7-MsM"/>
+                            <constraint firstItem="PdX-It-h49" firstAttribute="top" secondItem="Ia1-K6-d13" secondAttribute="bottom" id="Hav-lT-JsE"/>
+                            <constraint firstItem="PdX-It-h49" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leading" id="IvI-hy-NKE"/>
                             <constraint firstItem="fdN-x7-V9m" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leading" id="KAO-yg-3x2"/>
+                            <constraint firstItem="PdX-It-h49" firstAttribute="leading" secondItem="tsR-hK-woN" secondAttribute="leadingMargin" constant="-20" id="LgA-xk-O6G"/>
+                            <constraint firstAttribute="trailing" secondItem="PdX-It-h49" secondAttribute="trailing" id="P3D-KG-rR7"/>
                             <constraint firstAttribute="trailing" secondItem="fdN-x7-V9m" secondAttribute="trailing" id="dau-1S-bqS"/>
+                            <constraint firstItem="4ug-Mw-9AY" firstAttribute="top" secondItem="PdX-It-h49" secondAttribute="bottom" id="fbE-ie-3bs"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="PdX-It-h49" secondAttribute="trailing" constant="-20" id="kYe-TM-reY"/>
+                            <constraint firstItem="PdX-It-h49" firstAttribute="bottom" secondItem="tsR-hK-woN" secondAttribute="bottomMargin" id="urk-Dt-Lif"/>
+                            <constraint firstItem="PdX-It-h49" firstAttribute="top" secondItem="tsR-hK-woN" secondAttribute="topMargin" id="w2V-o2-3fL"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Hav-lT-JsE"/>
+                                <exclude reference="IvI-hy-NKE"/>
+                                <exclude reference="P3D-KG-rR7"/>
+                                <exclude reference="fbE-ie-3bs"/>
+                            </mask>
+                        </variation>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Instrumentation" image="first" id="acW-dT-cKf"/>
+                    <tabBarItem key="tabBarItem" title="Instrumentation" image="Instrumentation" id="acW-dT-cKf"/>
                     <connections>
                         <outlet property="columnStepper" destination="ebj-Es-R1E" id="nPf-uZ-pkt"/>
                         <outlet property="numColumnsText" destination="lVO-Zf-fzj" id="AaJ-07-CC1"/>
@@ -220,9 +240,9 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pwY-do-Uql">
-                                <rect key="frame" x="0.0" y="20" width="600" height="531"/>
-                                <color key="backgroundColor" red="0.99607843137254903" green="0.77254901960784317" blue="0.20392156862745098" alpha="0.10000000000000001" colorSpace="calibratedRGB"/>
+                            <view alpha="0.10000000000000001" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yBp-tr-RN1">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" red="0.99607843137254903" green="0.7686274509803922" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="isX-X4-AHh">
                                 <rect key="frame" x="0.0" y="20" width="600" height="531"/>
@@ -240,6 +260,9 @@
                                                 <exclude reference="LDw-Fp-HbW"/>
                                             </mask>
                                         </variation>
+                                        <connections>
+                                            <action selector="stepClicked:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="44I-fE-fRD"/>
+                                        </connections>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JQY-GA-479" customClass="GridView" customModule="Assignment4" customModuleProvider="target">
                                         <rect key="frame" x="88" y="53" width="425" height="425"/>
@@ -287,20 +310,20 @@
                                 </constraints>
                             </view>
                         </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="isX-X4-AHh" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leadingMargin" constant="-20" id="2sa-7m-J4A"/>
-                            <constraint firstItem="pwY-do-Uql" firstAttribute="centerX" secondItem="QS5-Rx-YEW" secondAttribute="centerX" id="CHE-rh-B5c"/>
-                            <constraint firstItem="pwY-do-Uql" firstAttribute="top" secondItem="L7p-HK-0SC" secondAttribute="bottom" id="KS0-xc-xVJ"/>
+                            <constraint firstItem="yBp-tr-RN1" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leadingMargin" constant="-20" id="BcZ-si-p1A"/>
+                            <constraint firstItem="yBp-tr-RN1" firstAttribute="bottom" secondItem="QS5-Rx-YEW" secondAttribute="bottomMargin" id="HAU-b2-aDq"/>
                             <constraint firstItem="isX-X4-AHh" firstAttribute="top" secondItem="L7p-HK-0SC" secondAttribute="bottom" id="UQU-oU-TNg"/>
-                            <constraint firstItem="Djb-ko-YwX" firstAttribute="top" secondItem="pwY-do-Uql" secondAttribute="bottom" id="fwy-cm-Qk0"/>
+                            <constraint firstItem="yBp-tr-RN1" firstAttribute="top" secondItem="QS5-Rx-YEW" secondAttribute="topMargin" id="jCt-3F-6Lf"/>
                             <constraint firstAttribute="trailingMargin" secondItem="isX-X4-AHh" secondAttribute="trailing" constant="-20" id="lCq-cd-AK5"/>
                             <constraint firstItem="isX-X4-AHh" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leading" id="ltw-Nb-OTe"/>
                             <constraint firstAttribute="bottom" secondItem="isX-X4-AHh" secondAttribute="bottom" id="pfj-FE-pjN"/>
-                            <constraint firstItem="pwY-do-Uql" firstAttribute="leading" secondItem="QS5-Rx-YEW" secondAttribute="leading" id="rzi-y2-mSd"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="yBp-tr-RN1" secondAttribute="trailing" constant="-20" id="sdw-dA-pqe"/>
                             <constraint firstAttribute="trailing" secondItem="isX-X4-AHh" secondAttribute="trailing" id="w52-9o-ctw"/>
                             <constraint firstItem="Djb-ko-YwX" firstAttribute="top" secondItem="isX-X4-AHh" secondAttribute="bottom" id="wkF-08-49a"/>
                             <constraint firstItem="isX-X4-AHh" firstAttribute="top" secondItem="L7p-HK-0SC" secondAttribute="bottom" id="yWa-DY-WZt"/>
-                            <constraint firstAttribute="trailing" secondItem="pwY-do-Uql" secondAttribute="trailing" id="zry-Vx-sjR"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -311,7 +334,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Simulation" image="second" id="cPa-gy-q4n"/>
+                    <tabBarItem key="tabBarItem" title="Simulation" image="Simulation" id="cPa-gy-q4n"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
             </objects>
@@ -348,9 +371,21 @@
                     <view key="view" contentMode="scaleToFill" id="pou-Qb-iem">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="0.11764705882352941" green="0.58039215686274515" blue="0.30588235294117649" alpha="0.10000000000000001" colorSpace="calibratedRGB"/>
+                        <subviews>
+                            <view alpha="0.10000000000000001" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xis-Sd-T5n">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" red="0.10588235294117647" green="0.5725490196078431" blue="0.29411764705882354" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Xis-Sd-T5n" firstAttribute="top" secondItem="pou-Qb-iem" secondAttribute="topMargin" id="TBk-nc-cah"/>
+                            <constraint firstItem="Xis-Sd-T5n" firstAttribute="leading" secondItem="pou-Qb-iem" secondAttribute="leadingMargin" constant="-20" id="Yl5-ix-G7J"/>
+                            <constraint firstItem="Xis-Sd-T5n" firstAttribute="bottom" secondItem="pou-Qb-iem" secondAttribute="bottomMargin" id="tbh-Kn-UUq"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Xis-Sd-T5n" secondAttribute="trailing" constant="-20" id="xKh-Nt-Tua"/>
+                        </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Statistics" id="gii-A9-DCy"/>
+                    <tabBarItem key="tabBarItem" title="Statistics" image="Statistics" id="gii-A9-DCy"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l86-Yl-f2y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -358,7 +393,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="first" width="30" height="30"/>
-        <image name="second" width="30" height="30"/>
+        <image name="Instrumentation" width="25" height="25"/>
+        <image name="Simulation" width="26" height="26"/>
+        <image name="Statistics" width="25" height="25"/>
     </resources>
 </document>

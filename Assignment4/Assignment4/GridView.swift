@@ -11,42 +11,17 @@ import Foundation
 
 @IBDesignable class GridView: UIView {
 
+    // IBInspectables are not imperative in Assignent 4
+    var rows: Int = StandardEngine.sharedInstance.rows
+    var cols: Int = StandardEngine.sharedInstance.cols
+    
     // IBInpectable Properties
-    @IBInspectable var rows: Int = 20 {
-        // Reinitialises "grid" to .Empty
-        didSet {
-            var copyArray: [[CellState]] = []
-            for row in 0..<rows {
-                copyArray.append([])
-                for _ in 0..<cols {
-                    copyArray[row].append(.Empty)
-                }
-            }
-            grid = copyArray
-        }
-    }
-    @IBInspectable var cols: Int = 20 {
-        // Reinitialises "grid" to .Empty
-        didSet {
-            var copyArray: [[CellState]] = []
-            for row in 0..<rows {
-                copyArray.append([])
-                for _ in 0..<cols {
-                    copyArray[row].append(.Empty)
-                }
-            }
-            grid = copyArray
-        }
-    }
     @IBInspectable var livingColor: UIColor = UIColor.redColor()
     @IBInspectable var emptyColor: UIColor = UIColor.greenColor()
     @IBInspectable var bornColor: UIColor = UIColor.blueColor()
     @IBInspectable var diedColor: UIColor = UIColor.brownColor()
     @IBInspectable var gridColor: UIColor = UIColor.blackColor()
     @IBInspectable var gridWidth: CGFloat = 3.0
-    
-    // Matrix holding the states of all the cells
-    var grid = [[CellState]]()
     
     // Function that displays the grid with the cells in it on the screen
     override func drawRect(rect: CGRect) {
@@ -99,15 +74,15 @@ import Foundation
                 // Note: Size measurements include 'gridWidth' to make the cells look more attractive
                 let rectangle = CGRect(x: CGFloat(col) * colDist + gridWidth / 2, y: CGFloat(row) * rowDist + gridWidth / 2, width: colDist - gridWidth, height: rowDist - gridWidth)
                 let path = UIBezierPath(ovalInRect: rectangle)
-                switch grid[row][col] {
-                case .Living:
+                switch StandardEngine.sharedInstance.grid[row, col] {
+                case .Living?:
                     livingColor.setFill()
-                case .Born:
+                case .Born?:
                     bornColor.setFill()
-                case .Empty:
-                    emptyColor.setFill()
-                case .Died:
+                case .Died?:
                     diedColor.setFill()
+                default:
+                    emptyColor.setFill()
                 }
                 path.fill()
             }
@@ -137,7 +112,7 @@ import Foundation
         
         //
         if cellX < cols && cellY < rows && cellX >= 0 && cellY >= 0 {
-            grid[cellY][cellX] = CellState.toggle(grid[cellY][cellX])
+            StandardEngine.sharedInstance.grid[cellY, cellX] = CellState.toggle(StandardEngine.sharedInstance.grid[cellY, cellX]!)
         }
         
         // Updates the grid
@@ -145,6 +120,5 @@ import Foundation
         self.setNeedsDisplayInRect(updatedGrid)
         
     }
-
     
 }
