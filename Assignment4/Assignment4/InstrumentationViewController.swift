@@ -10,16 +10,28 @@ import UIKit
 
 class InstrumentationViewController: UIViewController {
 
+    @IBOutlet weak var numRowsText: UITextField!
+    @IBOutlet weak var numColumnsText: UITextField!
+    @IBOutlet weak var rowStepper: UIStepper!
+    @IBOutlet weak var columnStepper: UIStepper!
+    
+    var engine: EngineProtocol!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+//        engine = StandardEngine.sharedInstance
+//        engine.delegate = self
+//        numRowsText.text = String(rowStepper.value)
+//        numColumnsText.text = String(columnStepper.value)
+        
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    @IBAction func modifyRows(sender: UIStepper) {
+        
     }
-
-
+    
+    @IBAction func modifyColumns(sender: UIStepper) {
+    }
 }
 
