@@ -70,7 +70,7 @@ class StandardEngine: EngineProtocol {
             if let delegate = delegate {
                 delegate.engineDidUpdate(grid)
             }
-            NSNotificationCenter.defaultCenter().postNotificationName("gridModifyNotification", object: self, userInfo: ["Notification" : grid])
+            NSNotificationCenter.defaultCenter().postNotificationName("gridModifyNotification", object: nil, userInfo: ["Notification" : grid])
         }
     }
     var cols: Int {
@@ -78,7 +78,7 @@ class StandardEngine: EngineProtocol {
             if let delegate = delegate {
                 delegate.engineDidUpdate(grid)
             }
-            NSNotificationCenter.defaultCenter().postNotificationName("gridModifyNotification", object: self, userInfo: ["Notification" : grid])
+            NSNotificationCenter.defaultCenter().postNotificationName("gridModifyNotification", object: nil, userInfo: ["Notification" : grid])
         }
     }
     
@@ -128,7 +128,7 @@ class StandardEngine: EngineProtocol {
             delegate.engineDidUpdate(grid)
         }
         
-        NSNotificationCenter.defaultCenter().postNotificationName("gridModifiedNotification", object: nil, userInfo: ["Notification" : grid])
+        NSNotificationCenter.defaultCenter().postNotificationName("gridModifyNotification", object: nil, userInfo: ["Notification" : StandardEngine.sharedInstance.grid])
         
         return after
     }
