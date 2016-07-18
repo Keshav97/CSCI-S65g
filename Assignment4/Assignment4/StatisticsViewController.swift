@@ -25,13 +25,13 @@ class StatisticsViewController: UIViewController {
         bornCells.text = String(numBorn)
         livingCells.text = String(numLiving)
         diedCells.text = String(numDied)
-        emptyCells.text = String(numEmpty)
+        emptyCells.text = String(StandardEngine.sharedInstance.rows * StandardEngine.sharedInstance.cols)
 
     }
     
     func watchForNotifications(notification: NSNotification) {
         
-        let grid = notification.userInfo!["value"] as! GridProtocol
+        let grid = notification.userInfo!["Notification"] as! GridProtocol
         let cols = grid.cols
         let rows = grid.rows
         
@@ -57,7 +57,5 @@ class StatisticsViewController: UIViewController {
         numBorn = 0
         numDied = 0
         numEmpty = 0
-        
-        print("test")
     }
 }
