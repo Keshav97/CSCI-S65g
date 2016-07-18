@@ -28,11 +28,11 @@ class InstrumentationViewController: UIViewController {
             delegate.engineDidUpdate(StandardEngine.sharedInstance.grid)
         }
         NSNotificationCenter.defaultCenter().postNotificationName("gridModifyNotification", object: nil, userInfo: ["Notification" : StandardEngine.sharedInstance.grid])
+        StandardEngine.sharedInstance.refreshInterval = NSTimeInterval(refreshRateController.value)
     }
 
     @IBAction func sliderValueChanged(sender: UISlider) {
         StandardEngine.sharedInstance.refreshInterval = NSTimeInterval(sender.value)
-        print(sender.value)
     }
     
     @IBAction func modifyRows(sender: UIStepper) {
