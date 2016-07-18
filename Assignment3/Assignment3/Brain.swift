@@ -88,16 +88,10 @@ class Step {
                 if !(xShift == 0 && yShift == 0) {
                     
                     // Handling wrapping for cells along the edges
-                    var neighbouringColumn = (cellCoordinates.1 + xShift) % columnSize
-                    if neighbouringColumn == -1 {
-                        neighbouringColumn += columnSize
-                    }
+                    let neighbouringColumn = (cellCoordinates.1 + xShift + columnSize) % columnSize
                     
                     // Handling wrapping for cells along the edges
-                    var neighbouringRow = (cellCoordinates.0 + yShift) % rowSize
-                    if neighbouringRow == -1 {
-                        neighbouringRow += rowSize
-                    }
+                    let neighbouringRow = (cellCoordinates.0 + yShift + rowSize) % rowSize
                     
                     // Appending neighbouring cells to array
                     neighbouringCells.append((neighbouringRow, neighbouringColumn))

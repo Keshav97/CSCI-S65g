@@ -46,12 +46,31 @@ class StandardEngine: EngineProtocol {
     var refreshRate: Double = 0.0
     var refreshTimer: NSTimer?
     
+    var refreshInterval: NSTimeInterval = 0 {
+        didSet {
+            if refreshInterval != 0 {
+                if let timer = refreshTimer { timer.invalidate() }
+                let sel = #selector(StandardEngine.timerDidFire(_:))
+                refreshTimer = NSTimer.scheduledTimerWithTimeInterval(refreshInterval,
+                                                               target: self,
+                                                               selector: sel,
+                                                               userInfo: nil,
+                                                               repeats: true)
+            }
+            else if let timer = refreshTimer {
+                timer.invalidate()
+                self.refreshTimer = nil
+            }
+        }
+    }
+
+    
     var rows: Int {
         didSet {
             if let delegate = delegate {
                 delegate.engineDidUpdate(grid)
             }
-            NSNotificationCenter.defaultCenter().postNotificationName("gridModifyNotification", object: nil, userInfo: ["Notification" : Grid.self])
+            NSNotificationCenter.defaultCenter().postNotificationName("gridModifyNotification", object: self, userInfo: ["Notification" : grid])
         }
     }
     var cols: Int {
@@ -59,7 +78,7 @@ class StandardEngine: EngineProtocol {
             if let delegate = delegate {
                 delegate.engineDidUpdate(grid)
             }
-            NSNotificationCenter.defaultCenter().postNotificationName("gridModifyNotification", object: nil, userInfo: ["Notification" : Grid.self])
+            NSNotificationCenter.defaultCenter().postNotificationName("gridModifyNotification", object: self, userInfo: ["Notification" : grid])
         }
     }
     
@@ -67,7 +86,6 @@ class StandardEngine: EngineProtocol {
         self.rows = rows
         self.cols = cols
         grid = Grid(rows: rows, cols: cols)
-        NSNotificationCenter.defaultCenter().postNotificationName("gridModifiedNotification", object: self)
     }
     
     
@@ -75,41 +93,43 @@ class StandardEngine: EngineProtocol {
     func step() -> GridProtocol {
         
         // Defining and initialising the 'after' cell grid
-        var after: GridProtocol = Grid(rows: rows, cols: cols)
+        let after: GridProtocol = Grid(rows: rows, cols: cols)
         
         // Stores the states of the cells in the next step in the 'after' matrix/grid
         for row in 0..<rows {
             for column in 0..<cols {
                 let numberOfNeighboursAlive = countNeighboursAlive(row, col: column)
+                
                 switch numberOfNeighboursAlive {
-                    
                 // Cell state unchanged i.e Alive -> Alive, Dead -> Dead
                 case 2:
                     switch grid[row, column]! {
-                    case .Born, .Living:
-                        after[row, column] = .Living
-                    case .Died, .Empty:
-                        after[row, column] = .Empty
+                    case .Born, .Living: after[row, column] = .Living
+                    case .Died, .Empty: after[row, column] = .Empty
                     }
                 // Cell reproduction i.e Alive -> Alive, Dead -> Alive
                 case 3:
                     switch grid[row, column]! {
-                    case .Born, .Living:
-                        after[row, column] = .Living
-                    case .Died, .Empty:
-                        after[row, column] = .Born
+                    case .Born, .Living: after[row, column] = .Living
+                    case .Died, .Empty: after[row, column] = .Born
                     }
                 // Cell death: overcrowding/undercrowding i.e Alive -> Dead, Dead -> Dead
                 default:
                     switch grid[row, column]! {
-                    case .Born, .Living:
-                        after[row, column] = .Died
-                    case .Died, .Empty:
-                        after[row, column] = .Empty
+                    case .Born, .Living: after[row, column] = .Died
+                    case .Died, .Empty: after[row, column] = .Empty
                     }
                 }
             }
         }
+        
+        //call the delegate method to update
+        if let delegate = delegate {
+            delegate.engineDidUpdate(grid)
+        }
+        
+        NSNotificationCenter.defaultCenter().postNotificationName("gridModifiedNotification", object: nil, userInfo: ["Notification" : grid])
+        
         return after
     }
     
@@ -127,6 +147,9 @@ class StandardEngine: EngineProtocol {
         }
         return numberOfNeigboursAlive
     }
+        
+    @objc func timerDidFire(timer:NSTimer) {
+        StandardEngine.sharedInstance.grid = StandardEngine.sharedInstance.step()
+    }
     
 }
-

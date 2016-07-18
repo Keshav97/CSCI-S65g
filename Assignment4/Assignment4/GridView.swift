@@ -9,19 +9,15 @@
 import UIKit
 import Foundation
 
-@IBDesignable class GridView: UIView {
+class GridView: UIView {
 
     // IBInspectables are not imperative in Assignent 4
-    var rows: Int = StandardEngine.sharedInstance.rows
-    var cols: Int = StandardEngine.sharedInstance.cols
-    
-    // IBInpectable Properties
-    @IBInspectable var livingColor: UIColor = UIColor.redColor()
-    @IBInspectable var emptyColor: UIColor = UIColor.greenColor()
-    @IBInspectable var bornColor: UIColor = UIColor.blueColor()
-    @IBInspectable var diedColor: UIColor = UIColor.brownColor()
-    @IBInspectable var gridColor: UIColor = UIColor.blackColor()
-    @IBInspectable var gridWidth: CGFloat = 3.0
+    var livingColor: UIColor = UIColor.init(red: 27, green: 205, blue: 74, alpha: 1)
+    var emptyColor: UIColor = UIColor.init(red: 85, green: 85, blue: 95, alpha: 1)
+    var bornColor: UIColor = UIColor.init(red: 27, green: 205, blue: 74, alpha: 0.6)
+    var diedColor: UIColor = UIColor.init(red: 85, green: 86, blue: 85, alpha: 0.6)
+    var gridColor: UIColor = UIColor.init(red: 38, green: 38, blue: 38, alpha: 1)
+    var gridWidth: CGFloat = 2.0
     
     // Function that displays the grid with the cells in it on the screen
     override func drawRect(rect: CGRect) {
@@ -37,9 +33,9 @@ import Foundation
         var rowY = bounds.origin.y
         
         // Distance between 2 rows
-        let rowDist = bounds.height / CGFloat(rows)
+        let rowDist = bounds.height / CGFloat(StandardEngine.sharedInstance.rows)
         
-        for _ in 0...rows {
+        for _ in 0...StandardEngine.sharedInstance.rows {
             
             // Draws horizontal line
             gridPath.moveToPoint(CGPoint(x: rowX, y: rowY))
@@ -52,9 +48,9 @@ import Foundation
         let colY = bounds.origin.y
         
         // Distance between 2 columns
-        let colDist = bounds.width / CGFloat(cols)
+        let colDist = bounds.width / CGFloat(StandardEngine.sharedInstance.cols)
         
-        for _ in 0...cols {
+        for _ in 0...StandardEngine.sharedInstance.cols {
             
             // Draws vertical line
             gridPath.moveToPoint(CGPoint(x: colX, y: colY))
@@ -69,8 +65,8 @@ import Foundation
         gridPath.stroke()
         
         // Fill each cell with the color corresponding to its cell state
-        for row in 0..<rows {
-            for col in 0..<cols {
+        for row in 0..<StandardEngine.sharedInstance.rows {
+            for col in 0..<StandardEngine.sharedInstance.cols {
                 // Note: Size measurements include 'gridWidth' to make the cells look more attractive
                 let rectangle = CGRect(x: CGFloat(col) * colDist + gridWidth / 2, y: CGFloat(row) * rowDist + gridWidth / 2, width: colDist - gridWidth, height: rowDist - gridWidth)
                 let path = UIBezierPath(ovalInRect: rectangle)
@@ -97,21 +93,28 @@ import Foundation
         }
     }
     
+    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        if let touch = touches.first {
+            self.makeTouch(touch)
+            
+        }
+    }
+    
     func makeTouch(touch: UITouch) {
         
         // Determines coordinates of the touch location
         let point = touch.locationInView(self)
         
         // Finds the width and height of a cell
-        let cellHeight = (bounds.height) / CGFloat(rows)
-        let cellWidth = (bounds.width) / CGFloat(cols)
+        let cellHeight = (bounds.height) / CGFloat(StandardEngine.sharedInstance.rows)
+        let cellWidth = (bounds.width) / CGFloat(StandardEngine.sharedInstance.cols)
         
         // Finds the corresponding row and column indices
         let cellX = Int(CGFloat(point.x) / cellWidth)
         let cellY = Int(CGFloat(point.y) / cellHeight)
         
         //
-        if cellX < cols && cellY < rows && cellX >= 0 && cellY >= 0 {
+        if cellX < StandardEngine.sharedInstance.cols && cellY < StandardEngine.sharedInstance.rows && cellX >= 0 && cellY >= 0 {
             StandardEngine.sharedInstance.grid[cellY, cellX] = CellState.toggle(StandardEngine.sharedInstance.grid[cellY, cellX]!)
         }
         

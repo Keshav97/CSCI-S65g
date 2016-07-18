@@ -10,21 +10,20 @@ import UIKit
 
 class SimulationViewController: UIViewController, EngineDelegateProtocol {
 
-    var instance: EngineProtocol!
+    @IBOutlet weak var grid: GridView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        instance = StandardEngine.sharedInstance
-        instance.delegate = self
+        StandardEngine.sharedInstance.delegate = self
         
     }
 
     func engineDidUpdate(withGrid: GridProtocol) {
-        
+        grid.setNeedsDisplay()
     }
 
     @IBAction func stepClicked(sender: UIButton) {
-        
+        StandardEngine.sharedInstance.grid = StandardEngine.sharedInstance.step()
     }
 }
 

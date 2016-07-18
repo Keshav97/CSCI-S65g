@@ -38,10 +38,16 @@ enum CellState: String {
     }
 }
 
+// Variables storing number of cells in different states
+var numBorn: Int = 0
+var numLiving: Int = 0
+var numDied: Int = 0
+var numEmpty: Int = 0
+
 // Shifts to find row and column of neighbouring cells
 let shifts = [-1, 0, 1]
 
-protocol GridProtocol {
+protocol GridProtocol: class {
     var rows: Int { get }
     var cols: Int { get }
     init(rows: Int, cols: Int)
@@ -54,7 +60,7 @@ class Grid: GridProtocol {
     
     var rows: Int
     var cols: Int
-    var grid = [[CellState]]()
+    private var grid = [[CellState]]()
     
     required init(rows: Int, cols: Int) {
         self.rows = rows
@@ -72,16 +78,10 @@ class Grid: GridProtocol {
                 if !(xShift == 0 && yShift == 0) {
                     
                     // Handling wrapping for cells along the edges
-                    var neighbouringColumn = (col + xShift) % cols
-                    if neighbouringColumn == -1 {
-                        neighbouringColumn += cols
-                    }
+                    let neighbouringColumn = (col + xShift + cols) % cols
                     
                     // Handling wrapping for cells along the edges
-                    var neighbouringRow = (row + yShift) % rows
-                    if neighbouringRow == -1 {
-                        neighbouringRow += rows
-                    }
+                    let neighbouringRow = (row + yShift + rows) % rows
                     
                     // Appending neighbouring cells to array
                     neighbouringCells.append((neighbouringRow, neighbouringColumn))
