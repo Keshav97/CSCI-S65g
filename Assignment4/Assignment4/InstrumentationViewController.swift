@@ -27,7 +27,7 @@ class InstrumentationViewController: UIViewController {
         if let delegate = StandardEngine.sharedInstance.delegate {
             delegate.engineDidUpdate(StandardEngine.sharedInstance.grid)
         }
-        NSNotificationCenter.defaultCenter().postNotificationName("gridModifyNotification", object: nil, userInfo: ["value" : StandardEngine.sharedInstance.grid])
+        NSNotificationCenter.defaultCenter().postNotificationName("gridModifyNotification", object: nil, userInfo: ["Notification" : StandardEngine.sharedInstance.grid])
     }
 
     @IBAction func sliderValueChanged(sender: UISlider) {

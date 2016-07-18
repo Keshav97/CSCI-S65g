@@ -22,6 +22,7 @@ class StatisticsViewController: UIViewController {
         let centre = NSNotificationCenter.defaultCenter()
         centre.addObserver(self, selector: sel, name: "gridModifyNotification", object: nil)
         
+        // default values for the count of cells in different states
         bornCells.text = String(numBorn)
         livingCells.text = String(numLiving)
         diedCells.text = String(numDied)
