@@ -57,5 +57,7 @@ class StatisticsViewController: UIViewController {
         numBorn = 0
         numDied = 0
         numEmpty = 0
+        
+        print("test")
     }
 }

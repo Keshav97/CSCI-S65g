@@ -23,6 +23,11 @@ class InstrumentationViewController: UIViewController {
         
         numRowsText.text = String(Int(rowStepper.value))
         numColumnsText.text = String(Int(columnStepper.value))
+        
+        if let delegate = StandardEngine.sharedInstance.delegate {
+            delegate.engineDidUpdate(StandardEngine.sharedInstance.grid)
+        }
+        NSNotificationCenter.defaultCenter().postNotificationName("gridModifyNotification", object: nil, userInfo: ["value" : StandardEngine.sharedInstance.grid])
     }
 
     @IBAction func sliderValueChanged(sender: UISlider) {

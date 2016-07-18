@@ -24,6 +24,7 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
 
     @IBAction func stepClicked(sender: UIButton) {
         StandardEngine.sharedInstance.grid = StandardEngine.sharedInstance.step()
+        NSNotificationCenter.defaultCenter().postNotificationName("gridModifyNotification", object: nil, userInfo: ["value" : StandardEngine.sharedInstance.grid])
     }
 }
 
