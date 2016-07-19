@@ -22,17 +22,34 @@ class StatisticsViewController: UIViewController {
         let centre = NSNotificationCenter.defaultCenter()
         centre.addObserver(self, selector: sel, name: "gridModifyNotification", object: nil)
         
+        calculateStatistics()
+        
         // default values for the count of cells in different states
         bornCells.text = String(numBorn)
         livingCells.text = String(numLiving)
         diedCells.text = String(numDied)
-        emptyCells.text = String(StandardEngine.sharedInstance.rows * StandardEngine.sharedInstance.cols)
+        emptyCells.text = String(numEmpty)
 
     }
     
     func watchForNotifications(notification: NSNotification) {
         
-        let grid = notification.userInfo!["Notification"] as! GridProtocol
+        // Setting the count to 0
+        numLiving = 0
+        numBorn = 0
+        numDied = 0
+        numEmpty = 0
+        
+        calculateStatistics()
+        
+        bornCells.text = String(numBorn)
+        livingCells.text = String(numLiving)
+        diedCells.text = String(numDied)
+        emptyCells.text = String(numEmpty)
+    }
+    
+    func calculateStatistics() {
+        let grid = StandardEngine.sharedInstance.grid
         let cols = grid.cols
         let rows = grid.rows
         
@@ -47,16 +64,5 @@ class StatisticsViewController: UIViewController {
                 }
             }
         }
-        
-        bornCells.text = String(numBorn)
-        livingCells.text = String(numLiving)
-        diedCells.text = String(numDied)
-        emptyCells.text = String(numEmpty)
-        
-        // Setting the count to 0
-        numLiving = 0
-        numBorn = 0
-        numDied = 0
-        numEmpty = 0
     }
 }

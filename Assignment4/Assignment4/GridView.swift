@@ -121,7 +121,7 @@ class GridView: UIView {
         // Updates the grid
         let updatedGrid = CGRect(x: CGFloat(cellX) * cellWidth + gridWidth / 2, y: CGFloat(cellY) * cellHeight + gridWidth / 2, width: cellWidth - gridWidth, height: cellHeight - gridWidth)
         
-        NSNotificationCenter.defaultCenter().postNotificationName("gridModifyNotification", object: nil, userInfo: ["Notification" : StandardEngine.sharedInstance.grid])
+        NSNotificationCenter.defaultCenter().postNotificationName("gridModifyNotification", object: nil, userInfo: nil)
         
         self.setNeedsDisplayInRect(updatedGrid)
         

@@ -27,7 +27,7 @@ class InstrumentationViewController: UIViewController {
         if let delegate = StandardEngine.sharedInstance.delegate {
             delegate.engineDidUpdate(StandardEngine.sharedInstance.grid)
         }
-        NSNotificationCenter.defaultCenter().postNotificationName("gridModifyNotification", object: nil, userInfo: ["Notification" : StandardEngine.sharedInstance.grid])
+        NSNotificationCenter.defaultCenter().postNotificationName("gridModifyNotification", object: nil, userInfo: nil)
         StandardEngine.sharedInstance.refreshInterval = NSTimeInterval(refreshRateController.value)
     }
 
