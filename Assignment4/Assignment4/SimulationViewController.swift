@@ -15,7 +15,6 @@ class SimulationViewController: UIViewController, EngineDelegateProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
         StandardEngine.sharedInstance.delegate = self
-        
     }
 
     func engineDidUpdate(withGrid: GridProtocol) {
