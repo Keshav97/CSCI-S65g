@@ -9,15 +9,45 @@
 import UIKit
 import Foundation
 
-@IBDesignable class GridView: UIView {
-
+class GridView: UIView {
     
-    @IBInspectable var livingColor: UIColor = UIColor.init(red: 27, green: 205, blue: 74, alpha: 1)
-    @IBInspectable var emptyColor: UIColor = UIColor.init(red: 85, green: 85, blue: 95, alpha: 1)
-    @IBInspectable var bornColor: UIColor = UIColor.init(red: 27, green: 205, blue: 74, alpha: 0.6)
-    @IBInspectable var diedColor: UIColor = UIColor.init(red: 85, green: 86, blue: 85, alpha: 0.6)
-    @IBInspectable var gridColor: UIColor = UIColor.init(red: 38, green: 38, blue: 38, alpha: 1)
-    @IBInspectable var gridWidth: CGFloat = 2.0
+    
+    //set up variables
+    
+    var points:[(Int,Int)]? {
+        get{
+            var newValue: [(Int,Int)] = []
+            _ = StandardEngine.sharedInstance.grid.cells.map{
+                switch $0.state{
+                case .Alive: newValue.append($0.position)
+                case .Born: newValue.append($0.position)
+                default: break
+                }
+            }
+            return newValue
+        }
+        set(newValue){
+            let rows = StandardEngine.sharedInstance.grid.rows
+            let cols = StandardEngine.sharedInstance.grid.cols
+            StandardEngine.sharedInstance.grid = Grid(rows,cols, cellInitializer: {_ in .Empty})
+            if let points = newValue {
+                _ = points.map{
+                    StandardEngine.sharedInstance.grid[$0.0, $0.1] = .Alive
+                }
+            }
+        }
+        
+    }
+    
+
+    // IBInspectables are not imperative in this Assignent 
+    var livingColor: UIColor = UIColor.greenColor()
+    var emptyColor: UIColor = UIColor.grayColor()
+    var bornColor: UIColor = UIColor.redColor()
+    var diedColor: UIColor = UIColor.yellowColor()
+    var gridColor: UIColor = UIColor.blackColor()
+    var gridWidth: CGFloat = 2.0
+
     
     // Function that displays the grid with the cells in it on the screen
     override func drawRect(rect: CGRect) {
@@ -71,13 +101,13 @@ import Foundation
                 let rectangle = CGRect(x: CGFloat(col) * colDist + gridWidth / 2, y: CGFloat(row) * rowDist + gridWidth / 2, width: colDist - gridWidth, height: rowDist - gridWidth)
                 let path = UIBezierPath(ovalInRect: rectangle)
                 switch StandardEngine.sharedInstance.grid[row, col] {
-                case .Living?:
+                case .Alive:
                     livingColor.setFill()
-                case .Born?:
+                case .Born:
                     bornColor.setFill()
-                case .Died?:
+                case .Died:
                     diedColor.setFill()
-                default:
+                case .Empty:
                     emptyColor.setFill()
                 }
                 path.fill()
@@ -115,7 +145,7 @@ import Foundation
         
         //
         if cellX < StandardEngine.sharedInstance.cols && cellY < StandardEngine.sharedInstance.rows && cellX >= 0 && cellY >= 0 {
-            StandardEngine.sharedInstance.grid[cellY, cellX] = CellState.toggle(StandardEngine.sharedInstance.grid[cellY, cellX]!)
+            StandardEngine.sharedInstance.grid[cellY, cellX] = CellState.toggle(StandardEngine.sharedInstance.grid[cellY, cellX])
         }
         
         // Updates the grid
@@ -126,5 +156,4 @@ import Foundation
         self.setNeedsDisplayInRect(updatedGrid)
         
     }
-
 }

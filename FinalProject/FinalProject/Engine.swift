@@ -8,23 +8,25 @@
 
 import Foundation
 
-protocol EngineDelegateProtocol {
+protocol  EngineDelegate: class {
     func engineDidUpdate(withGrid: GridProtocol)
 }
 
 protocol EngineProtocol {
-    var delegate: EngineDelegateProtocol? { get set }
-    var grid: GridProtocol { get }
-    var refreshRate: Double { get set }
-    var refreshTimer: NSTimer? { get set }
+    
     var rows: Int { get set }
     var cols: Int { get set }
+    var grid: GridProtocol { get }
+    weak var delegate: EngineDelegate? { get set }
+    var refreshRate:  Double { get set }
+    var refreshTimer: NSTimer? { get set }
     func step() -> GridProtocol
+    
 }
 
 class StandardEngine: EngineProtocol {
     
-    private static var _sharedInstance = StandardEngine(rows: 10, cols: 10)
+    static var _sharedInstance: StandardEngine = StandardEngine(20, 20)
     
     static var sharedInstance: StandardEngine {
         get {
@@ -32,17 +34,48 @@ class StandardEngine: EngineProtocol {
         }
     }
     
-    var delegate: EngineDelegateProtocol?
     var grid: GridProtocol
     
-    // In class, we discussed that we won't cover default values in protocols therefore the value of refreshRate is specified here.
+    var rows: Int = 20 {
+        didSet {
+            grid = Grid(self.rows, self.cols) { _,_ in .Empty }
+            if let delegate = delegate { delegate.engineDidUpdate(grid) }
+            NSNotificationCenter.defaultCenter().postNotificationName("gridModifyNotification", object: nil, userInfo: nil)
+        }
+    }
+    var cols: Int = 20 {
+        didSet {
+            grid = Grid(self.rows, self.cols) { _,_ in .Empty }
+            if let delegate = delegate { delegate.engineDidUpdate(grid) }
+            NSNotificationCenter.defaultCenter().postNotificationName("gridModifyNotification", object: nil, userInfo: nil)
+        }
+    }
+    
+    //used to detect the changes made by user at the embed grid view
+    var changesDetect: Bool = false
+    
+    var isPaused: Bool = false
+    
+    weak var delegate: EngineDelegate?
+    
     var refreshRate: Double = 0.0
     var refreshTimer: NSTimer?
+    
+    subscript (i: Int, j: Int) -> CellState {
+        get {
+            return grid.cells[i * cols + j].state
+        }
+        set {
+            grid.cells[i * cols + j].state = newValue
+        }
+    }
+
     
     var refreshInterval: NSTimeInterval = 0 {
         didSet {
             if refreshInterval != 0 {
                 if let timer = refreshTimer { timer.invalidate() }
+                refreshInterval = 1 / refreshInterval
                 let sel = #selector(StandardEngine.timerDidFire(_:))
                 refreshTimer = NSTimer.scheduledTimerWithTimeInterval(refreshInterval,
                                                                       target: self,
@@ -57,40 +90,22 @@ class StandardEngine: EngineProtocol {
         }
     }
     
-    
-    var rows: Int {
-        didSet {
-            grid = Grid(rows: self.rows, cols: self.cols) { _, _ in .Empty }
-            if let delegate = delegate { delegate.engineDidUpdate(grid) }
-            
-            NSNotificationCenter.defaultCenter().postNotificationName("gridModifyNotification", object: nil, userInfo: nil)
-        }
-    }
-    var cols: Int {
-        didSet {
-            grid = Grid(rows: self.rows, cols: self.cols) { _, _ in .Empty }
-            if let delegate = delegate { delegate.engineDidUpdate(grid) }
-            
-            NSNotificationCenter.defaultCenter().postNotificationName("gridModifyNotification", object: nil, userInfo: nil)
-        }
-    }
-    
-    init(rows: Int, cols: Int, cellInitializer: CellInitializer = {_ in .Empty }) {
+    init(_ rows: Int, _ cols: Int, cellInitializer: CellInitializer = { _ in .Empty }) {
         self.rows = rows
         self.cols = cols
-        self.grid = Grid(rows: rows, cols: cols, cellInitializer: cellInitializer)
+        self.grid = Grid(rows, cols, cellInitializer: cellInitializer)
     }
     
     
     // Calculates and returns the new/updated grid/matrix
     func step() -> GridProtocol {
-        let newGrid = Grid(rows: self.rows, cols: self.cols)
+        let newGrid = Grid(self.rows, self.cols)
         newGrid.cells = grid.cells.map {
-            switch grid.neighborsAlive($0.position) {
-            case 2 where $0.state.isAlive(),
-            3 where $0.state.isAlive():  return Cell($0.position, .Living)
-            case 3 where !$0.state.isAlive(): return Cell($0.position, .Born)
-            case _ where $0.state.isAlive():  return Cell($0.position, .Died)
+            switch grid.livingNeighbors($0.position) {
+            case 2 where $0.state.isLiving(),
+            3 where $0.state.isLiving():  return Cell($0.position, .Alive)
+            case 3 where !$0.state.isLiving(): return Cell($0.position, .Born)
+            case _ where $0.state.isLiving():  return Cell($0.position, .Died)
             default:                           return Cell($0.position, .Empty)
             }
         }
