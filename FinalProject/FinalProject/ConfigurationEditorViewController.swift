@@ -53,7 +53,6 @@ class ConfigurationEditorViewController: UIViewController {
         }
         //clear the changes detecter
         StandardEngine.sharedInstance.changesDetect = false
-        
     }
     
     
