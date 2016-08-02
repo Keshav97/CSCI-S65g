@@ -21,7 +21,7 @@ class SimulationViewController: UIViewController, EngineDelegate {
         super.viewDidLoad()
         StandardEngine.sharedInstance.delegate = self
         
-        if StandardEngine.sharedInstance.isPaused{
+        if StandardEngine.sharedInstance.isPaused {
             pauseContinue.setTitle("Continue", forState: UIControlState.Normal)
         } else {
             pauseContinue.setTitle("Pause", forState: UIControlState.Normal)
@@ -79,7 +79,7 @@ class SimulationViewController: UIViewController, EngineDelegate {
                 ConfigurationViewController.sharedTable.names.append(text)
                 ConfigurationViewController.sharedTable.comments.append("")
                 
-                if let point = GridView().points{
+                if let point = GridView().points {
                     var medium:[[Int]] = []
                     _ = point.map{ medium.append([$0.0, $0.1]) }
                     ConfigurationViewController.sharedTable.gridContent.append(medium)
@@ -123,6 +123,16 @@ class SimulationViewController: UIViewController, EngineDelegate {
         
     }
     
+    //set up the handler to enable the save button when the user enters any text for the name
+    func handleTextFieldTextDidChangeNotification(notification: NSNotification) {
+        let textField = notification.object as! UITextField
+        
+        // Enforce a minimum length of >= 1 for secure text alerts.
+        if let text = textField.text{
+            AddAlertSaveAction!.enabled = text.characters.count >= 1
+        }
+    }
+    
     @IBAction func resetClicked(sender: UIBarButtonItem) {
     
         let rows = StandardEngine.sharedInstance.grid.rows
@@ -131,7 +141,7 @@ class SimulationViewController: UIViewController, EngineDelegate {
         if let delegate = StandardEngine.sharedInstance.delegate {
             delegate.engineDidUpdate(StandardEngine.sharedInstance.grid)
         }
-        NSNotificationCenter.defaultCenter().postNotificationName("setEngineStaticsNotification", object: nil, userInfo: nil)
+        NSNotificationCenter.defaultCenter().postNotificationName("gridModifyNotification", object: nil, userInfo: nil)
         
     }
     

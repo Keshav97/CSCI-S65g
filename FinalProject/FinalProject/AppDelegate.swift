@@ -15,6 +15,9 @@
  https://icons8.com/web-app/for/all/registry
  https://icons8.com/web-app/for/all/combo%20chart
  Licence: https://icons8.com/license/
+ 
+ Reload Icon: https://www.iconfinder.com/icons/254190/refresh_reload_rotate_synchronize_icon#size=128
+ Licence: https://creativecommons.org/licenses/by/3.0/
  */
 
 import UIKit
