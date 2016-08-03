@@ -28,7 +28,7 @@ class ConfigurationViewController: UITableViewController {
     }
     
     @IBAction func addEntry(sender: UIBarButtonItem) {
-        ConfigurationViewController.sharedTable.designNames.append("Add new name...")
+        ConfigurationViewController.sharedTable.designNames.append("New Name")
         ConfigurationViewController.sharedTable.gridContentCoordinates.append([])
         ConfigurationViewController.sharedTable.comments.append("")
         let rowItem = ConfigurationViewController.sharedTable.designNames.count - 1
