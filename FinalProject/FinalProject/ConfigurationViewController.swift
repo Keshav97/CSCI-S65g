@@ -103,12 +103,12 @@ class ConfigurationViewController: UITableViewController {
         //set up the size of the grid according to the content of the row selected
         let max = ConfigurationViewController.sharedTable.gridContent[editingRow].flatMap{$0}.maxElement()
         if let safeMax = max {
-            StandardEngine.sharedInstance.rows = (safeMax % 10 != 0) ? (safeMax/10+1)*10 : safeMax
-            StandardEngine.sharedInstance.cols = (safeMax % 10 != 0) ? (safeMax/10+1)*10 : safeMax
+            StandardEngine.sharedInstance.rows = (safeMax % 10 != 0) ? (safeMax / 10 + 1) * 10 : safeMax
+            StandardEngine.sharedInstance.cols = (safeMax % 10 != 0) ? (safeMax / 10 + 1) * 10 : safeMax
         }
         
         //set the cells on
-        let medium:[(Int,Int)] = ConfigurationViewController.sharedTable.gridContent[editingRow].map{return ($0[0], $0[1])}
+        let medium:[(Int, Int)] = ConfigurationViewController.sharedTable.gridContent[editingRow].map{return ($0[0], $0[1])}
         GridView().points = medium
         
         //update grid in simulation tab

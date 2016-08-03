@@ -37,7 +37,7 @@ class ConfigurationEditorViewController: UIViewController {
     @IBAction func cancelClicked(sender: UIBarButtonItem) {
         
         //if the user changes the grid and hits cancel button, an alert will pop up to confirm the action
-        if StandardEngine.sharedInstance.changesDetect{
+        if StandardEngine.sharedInstance.changesDetect {
             
             let alert = UIAlertController(title: "Quit Without Saving", message: "Are you sure you want to quit without saving?", preferredStyle: UIAlertControllerStyle.Alert)
             //add cancel button action
@@ -48,7 +48,7 @@ class ConfigurationEditorViewController: UIViewController {
                 self.presentViewController(alert, animated: true, completion: nil)
             }
             NSOperationQueue.mainQueue().addOperation(op)
-        }else{
+        } else {
             navigationController!.popViewControllerAnimated(true)
         }
         //clear the changes detecter
@@ -83,5 +83,10 @@ class ConfigurationEditorViewController: UIViewController {
     
     func watchForNotifications(notification:NSNotification){
         gridEditor.setNeedsDisplay()
+    }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?){
+        view.endEditing(true)
+        super.touchesBegan(touches, withEvent: event)
     }
 }

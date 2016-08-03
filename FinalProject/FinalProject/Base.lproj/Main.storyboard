@@ -50,7 +50,7 @@
                                             <constraint firstAttribute="height" constant="30" id="6Wo-E0-Uma"/>
                                             <constraint firstAttribute="width" constant="62" id="LvY-o9-Krz"/>
                                         </constraints>
-                                        <state key="normal" title="Pause"/>
+                                        <state key="normal" title="Play"/>
                                         <connections>
                                             <action selector="pauseContinueClicked:" destination="LxW-Y7-CpK" eventType="touchUpInside" id="BKG-QS-2Oe"/>
                                         </connections>
@@ -349,25 +349,25 @@
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8DI-hu-cr7">
                                                         <rect key="frame" x="54" y="0.0" width="432" height="132.5"/>
                                                         <subviews>
-                                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="5" minValue="0.10000000149011612" maxValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="Is7-OG-Zpx">
+                                                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="2" minValue="0.10000000149011612" maxValue="10" translatesAutoresizingMaskIntoConstraints="NO" id="Is7-OG-Zpx">
                                                                 <rect key="frame" x="18" y="31" width="396" height="31"/>
                                                                 <connections>
                                                                     <action selector="sliderValueChanged:" destination="6wB-EP-5yG" eventType="valueChanged" id="yr9-Nl-E9K"/>
                                                                 </connections>
                                                             </slider>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.1 Hz" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KF2-OY-Tls">
-                                                                <rect key="frame" x="392" y="56" width="40" height="17"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10 Hz" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KF2-OY-Tls">
+                                                                <rect key="frame" x="392" y="56" width="37" height="17"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10 Hz" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HiS-Uo-LrK">
-                                                                <rect key="frame" x="3" y="61" width="37" height="17"/>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.1 Hz" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HiS-Uo-LrK">
+                                                                <rect key="frame" x="0.0" y="61" width="40" height="17"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="MGo-k2-UV3">
+                                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MGo-k2-UV3">
                                                                 <rect key="frame" x="192" y="91" width="51" height="31"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="31" id="Fxy-pw-pGw"/>
@@ -434,7 +434,7 @@
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xbc-lm-ZIT" userLabel="Reload">
-                                                        <rect key="frame" x="499" y="6.5" width="26" height="26"/>
+                                                        <rect key="frame" x="499" y="7" width="26" height="26"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="26" id="53J-IF-v9C"/>
                                                             <constraint firstAttribute="width" secondItem="xbc-lm-ZIT" secondAttribute="height" multiplier="1:1" id="dji-LD-nVW"/>
@@ -729,7 +729,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
-                                    <action selector="commentFieldClicked:" destination="X5b-Dv-NOH" eventType="editingDidEnd" id="bqM-6Q-O3W"/>
+                                    <action selector="commentFieldClicked:" destination="X5b-Dv-NOH" eventType="editingDidBegin" id="okx-23-IbD"/>
                                 </connections>
                             </textField>
                         </subviews>

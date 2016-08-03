@@ -24,6 +24,8 @@ class IntrumentationViewController: UIViewController {
         
         refreshSwitch.setOn(false, animated: true)
         
+        refreshRateLabel.text = "Refresh Rate: " + String(format: "%.2f", refreshRateController.value) + "Hz"
+        
         //set up observer so that when the row and col get changed the numbers in the textfields will get updated
         let s = #selector(IntrumentationViewController.watchForNotifications(_:))
         let c = NSNotificationCenter.defaultCenter()
@@ -37,6 +39,8 @@ class IntrumentationViewController: UIViewController {
         let selc = #selector(IntrumentationViewController.turnOffTimedRefresh(_:))
         c.addObserver(self, selector: selc, name: "turnOffTimedRefresh", object: nil)
 
+        rowStepper.value = Double(StandardEngine.sharedInstance.rows)
+        columnStepper.value = Double(StandardEngine.sharedInstance.cols)
         
         numRowsText.text =  String(Int(StandardEngine.sharedInstance.rows))
         numColumnsText.text = String(Int(StandardEngine.sharedInstance.cols))
@@ -47,8 +51,8 @@ class IntrumentationViewController: UIViewController {
         if let delegate = StandardEngine.sharedInstance.delegate {
             delegate.engineDidUpdate(StandardEngine.sharedInstance.grid)
         }
+        
         NSNotificationCenter.defaultCenter().postNotificationName("gridModifyNotification", object: nil, userInfo: nil)
-        StandardEngine.sharedInstance.refreshInterval = NSTimeInterval(refreshRateController.value)
     }
     
     @IBAction func sliderValueChanged(sender: UISlider) {
@@ -65,6 +69,8 @@ class IntrumentationViewController: UIViewController {
         
         // Redrawing grid with updated number of rows
         StandardEngine.sharedInstance.grid = Grid(StandardEngine.sharedInstance.rows, StandardEngine.sharedInstance.cols)
+        
+        //post notification to update the grid in the embed view
         NSNotificationCenter.defaultCenter().postNotificationName("updateGridInEmbedView", object: nil, userInfo: nil)
     }
     
@@ -75,6 +81,7 @@ class IntrumentationViewController: UIViewController {
         // Redrawing grid with updated number of columns
         StandardEngine.sharedInstance.grid = Grid(StandardEngine.sharedInstance.rows, StandardEngine.sharedInstance.cols)
         
+        //post notification to update the grid in the embed view
         NSNotificationCenter.defaultCenter().postNotificationName("updateGridInEmbedView", object: nil, userInfo: nil)
     }
     
@@ -111,22 +118,21 @@ class IntrumentationViewController: UIViewController {
             let task = session.dataTaskWithRequest(urlRequest) {
                 (data, response, error) -> Void in
                 
-                let httpResponse = response as?NSHTTPURLResponse
+                let httpResponse = response as? NSHTTPURLResponse
                 let statusCode = httpResponse?.statusCode
-                if let safeStatusCode = statusCode{
+                if let safeStatusCode = statusCode {
                     if (safeStatusCode == 200) {
-                        do{
-                            
+                        do {
                             let json = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments) as? [AnyObject]
-                            for i in 0...json!.count-1 {
+                            for i in 0...json!.count - 1 {
                                 let pattern = json![i]
                                 let collection = pattern as! Dictionary<String, AnyObject>
                                 ConfigurationViewController.sharedTable.names.append(collection["title"]! as! String)
                                 let arr = collection["contents"].map{return $0 as! [[Int]]}
                                 ConfigurationViewController.sharedTable.gridContent.append(arr!)
                             }
-                            ConfigurationViewController.sharedTable.comments = ConfigurationViewController.sharedTable.names.map{_ in return ""}
-                        }catch {
+                            ConfigurationViewController.sharedTable.comments = ConfigurationViewController.sharedTable.names.map{ _ in return "" }
+                        } catch {
                             print("Error with Json: \(error)")
                             ConfigurationViewController.sharedTable.names = []
                             ConfigurationViewController.sharedTable.gridContent = []
@@ -146,7 +152,7 @@ class IntrumentationViewController: UIViewController {
                         let op = NSBlockOperation {
                             let alertController = UIAlertController(title: "Error", message:
                                 "HTTP Error \(safeStatusCode): \(NSHTTPURLResponse.localizedStringForStatusCode(safeStatusCode))           Please enter a valid url", preferredStyle: UIAlertControllerStyle.Alert)
-                            alertController.addAction(UIAlertAction(title: "OK", style: .Default,handler: nil))
+                            alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
                             
                             self.presentViewController(alertController, animated: true, completion: nil)
                             ConfigurationViewController.sharedTable.names = []
@@ -156,7 +162,7 @@ class IntrumentationViewController: UIViewController {
                         }
                         NSOperationQueue.mainQueue().addOperation(op)
                     }
-                }else{
+                } else {
                     //put the pop up window in the main thread for url errors and then pop it up
                     let op = NSBlockOperation {
                         let alertController = UIAlertController(title: "Error", message:
@@ -180,7 +186,7 @@ class IntrumentationViewController: UIViewController {
     
     @IBAction func rowEnter(sender: UITextField) {
         if let changeToRow = Int(sender.text!){
-            if changeToRow > 0{
+            if changeToRow > 0 {
                 StandardEngine.sharedInstance.rows = changeToRow
                 rowStepper.value = Double(changeToRow)
             }
@@ -195,7 +201,7 @@ class IntrumentationViewController: UIViewController {
                 
                 self.presentViewController(alertControllerRow, animated: true, completion: nil)
             }
-        }else {
+        } else {
             //if user enters a double, pop up an alert
             let alertControllerRow = UIAlertController(title: "Row Error", message:
                 "Please enter an interger !", preferredStyle: UIAlertControllerStyle.Alert)
@@ -212,7 +218,7 @@ class IntrumentationViewController: UIViewController {
     
     @IBAction func colEnter(sender: UITextField) {
         if let changeToCol = Int(sender.text!){
-            if changeToCol > 0{
+            if changeToCol > 0 {
                 StandardEngine.sharedInstance.cols = changeToCol
                 columnStepper.value = Double(changeToCol)
             }
@@ -267,7 +273,7 @@ class IntrumentationViewController: UIViewController {
         }
     }
     
-    // To hide the keyboard
+    
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?){
         view.endEditing(true)
         super.touchesBegan(touches, withEvent: event)

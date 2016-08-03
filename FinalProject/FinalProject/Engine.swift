@@ -40,14 +40,14 @@ class StandardEngine: EngineProtocol {
         didSet {
             grid = Grid(self.rows, self.cols) { _,_ in .Empty }
             if let delegate = delegate { delegate.engineDidUpdate(grid) }
-            NSNotificationCenter.defaultCenter().postNotificationName("gridModifyNotification", object: nil, userInfo: nil)
+            //NSNotificationCenter.defaultCenter().postNotificationName("gridModifyNotification", object: nil, userInfo: nil)
         }
     }
     var cols: Int = 20 {
         didSet {
             grid = Grid(self.rows, self.cols) { _,_ in .Empty }
             if let delegate = delegate { delegate.engineDidUpdate(grid) }
-            NSNotificationCenter.defaultCenter().postNotificationName("gridModifyNotification", object: nil, userInfo: nil)
+            //NSNotificationCenter.defaultCenter().postNotificationName("gridModifyNotification", object: nil, userInfo: nil)
         }
     }
     
@@ -74,10 +74,10 @@ class StandardEngine: EngineProtocol {
     var refreshInterval: NSTimeInterval = 0 {
         didSet {
             if refreshInterval != 0 {
+                let correctedInterval = 1 / refreshInterval
                 if let timer = refreshTimer { timer.invalidate() }
-                refreshInterval = 1 / refreshInterval
                 let sel = #selector(StandardEngine.timerDidFire(_:))
-                refreshTimer = NSTimer.scheduledTimerWithTimeInterval(refreshInterval,
+                refreshTimer = NSTimer.scheduledTimerWithTimeInterval(correctedInterval,
                                                                       target: self,
                                                                       selector: sel,
                                                                       userInfo: nil,

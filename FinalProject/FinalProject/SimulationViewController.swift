@@ -20,12 +20,10 @@ class SimulationViewController: UIViewController, EngineDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         StandardEngine.sharedInstance.delegate = self
-        
-        if StandardEngine.sharedInstance.isPaused {
-            pauseContinue.setTitle("Continue", forState: UIControlState.Normal)
-        } else {
-            pauseContinue.setTitle("Pause", forState: UIControlState.Normal)
-        }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        pauseContinue.enabled = StandardEngine.sharedInstance.isPaused
     }
     
     func engineDidUpdate(withGrid: GridProtocol) {
@@ -36,14 +34,14 @@ class SimulationViewController: UIViewController, EngineDelegate {
         StandardEngine.sharedInstance.isPaused = !StandardEngine.sharedInstance.isPaused
         if StandardEngine.sharedInstance.isPaused{
             StandardEngine.sharedInstance.refreshTimer?.invalidate()
-            pauseContinue.setTitle("Continue", forState: .Normal)
+            pauseContinue.enabled = true
             NSNotificationCenter.defaultCenter().postNotificationName("switchTimedRefresh", object: nil, userInfo: nil)
-        }else{
+        } else {
             StandardEngine.sharedInstance.refreshInterval = NSTimeInterval(StandardEngine.sharedInstance.refreshRate)
             if let delegate = StandardEngine.sharedInstance.delegate {
                 delegate.engineDidUpdate(StandardEngine.sharedInstance.grid)
             }
-            pauseContinue.setTitle("Pause", forState: .Normal)
+            pauseContinue.enabled = false
             NSNotificationCenter.defaultCenter().postNotificationName("switchTimedRefresh", object: nil, userInfo: nil)
         }
         
@@ -64,7 +62,7 @@ class SimulationViewController: UIViewController, EngineDelegate {
         //add cancel button action
         alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Default, handler: {(action) -> Void in
             removeTextFieldObserver()
-            if !StandardEngine.sharedInstance.isPaused{
+            if !StandardEngine.sharedInstance.isPaused {
                 StandardEngine.sharedInstance.refreshInterval = NSTimeInterval(StandardEngine.sharedInstance.refreshRate)
             }
             if let delegate = StandardEngine.sharedInstance.delegate {
@@ -75,13 +73,13 @@ class SimulationViewController: UIViewController, EngineDelegate {
         
         //set up save button actino to use later
         let saveAction = UIAlertAction(title: "Save", style: UIAlertActionStyle.Default, handler: {(action) -> Void in
-            if let text = self.inputTextField!.text{
+            if let text = self.inputTextField!.text {
                 ConfigurationViewController.sharedTable.names.append(text)
                 ConfigurationViewController.sharedTable.comments.append("")
                 
                 if let point = GridView().points {
                     var medium:[[Int]] = []
-                    _ = point.map{ medium.append([$0.0, $0.1]) }
+                    _ = point.map { medium.append([$0.0, $0.1]) }
                     ConfigurationViewController.sharedTable.gridContent.append(medium)
                 }
                 
@@ -92,7 +90,7 @@ class SimulationViewController: UIViewController, EngineDelegate {
             }
             removeTextFieldObserver()
             
-            if !StandardEngine.sharedInstance.isPaused{
+            if !StandardEngine.sharedInstance.isPaused {
                 StandardEngine.sharedInstance.refreshInterval = NSTimeInterval(StandardEngine.sharedInstance.refreshRate)
             }
             if let delegate = StandardEngine.sharedInstance.delegate {
@@ -137,7 +135,7 @@ class SimulationViewController: UIViewController, EngineDelegate {
     
         let rows = StandardEngine.sharedInstance.grid.rows
         let cols = StandardEngine.sharedInstance.grid.cols
-        StandardEngine.sharedInstance.grid = Grid(rows,cols, cellInitializer: {_ in .Empty})
+        StandardEngine.sharedInstance.grid = Grid(rows, cols, cellInitializer: {_ in .Empty})
         if let delegate = StandardEngine.sharedInstance.delegate {
             delegate.engineDidUpdate(StandardEngine.sharedInstance.grid)
         }
