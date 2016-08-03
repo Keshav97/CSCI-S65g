@@ -429,12 +429,12 @@
                                                 <rect key="frame" x="0.0" y="8" width="540" height="40"/>
                                                 <subviews>
                                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="https://dl.dropboxusercontent.com/u/7544475/S65g.json" borderStyle="roundedRect" placeholder="URL" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="b8o-5t-HhD">
-                                                        <rect key="frame" x="8" y="5" width="524" height="30"/>
+                                                        <rect key="frame" x="8" y="5" width="498" height="30"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xbc-lm-ZIT" userLabel="Reload">
-                                                        <rect key="frame" x="499" y="7" width="26" height="26"/>
+                                                        <rect key="frame" x="514" y="7" width="26" height="26"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="26" id="53J-IF-v9C"/>
                                                             <constraint firstAttribute="width" secondItem="xbc-lm-ZIT" secondAttribute="height" multiplier="1:1" id="dji-LD-nVW"/>
@@ -447,11 +447,19 @@
                                                 </subviews>
                                                 <constraints>
                                                     <constraint firstItem="xbc-lm-ZIT" firstAttribute="centerY" secondItem="2S4-Ri-tEQ" secondAttribute="centerY" id="D1b-zG-gid"/>
+                                                    <constraint firstAttribute="trailing" secondItem="xbc-lm-ZIT" secondAttribute="trailing" id="Dzp-nQ-uJ4"/>
                                                     <constraint firstItem="b8o-5t-HhD" firstAttribute="centerY" secondItem="2S4-Ri-tEQ" secondAttribute="centerY" id="MTl-WQ-PLt"/>
+                                                    <constraint firstItem="xbc-lm-ZIT" firstAttribute="leading" secondItem="b8o-5t-HhD" secondAttribute="trailing" constant="8" id="gVA-L5-Utg"/>
                                                     <constraint firstItem="b8o-5t-HhD" firstAttribute="leading" secondItem="2S4-Ri-tEQ" secondAttribute="leading" constant="8" id="h7V-iO-Z4w"/>
                                                     <constraint firstAttribute="trailing" secondItem="xbc-lm-ZIT" secondAttribute="trailing" constant="15" id="jVe-b5-PhJ"/>
                                                     <constraint firstAttribute="trailing" secondItem="b8o-5t-HhD" secondAttribute="trailing" constant="8" id="oQg-Rg-tSX"/>
                                                 </constraints>
+                                                <variation key="default">
+                                                    <mask key="constraints">
+                                                        <exclude reference="oQg-Rg-tSX"/>
+                                                        <exclude reference="jVe-b5-PhJ"/>
+                                                    </mask>
+                                                </variation>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aA8-8c-GDv">
                                                 <rect key="frame" x="0.0" y="40" width="540" height="93"/>
