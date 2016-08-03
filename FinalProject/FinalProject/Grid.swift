@@ -27,7 +27,7 @@ enum CellState: String {
     
     // Function that returns the appropriate cell state when a cell is clicked
     static func toggle(value: CellState) -> CellState {
-        StandardEngine.sharedInstance.changesDetect = true
+        StandardEngine.sharedInstance.checkChanges = true
         switch value {
         case .Empty, .Died:
             return .Alive

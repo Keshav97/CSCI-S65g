@@ -21,8 +21,8 @@ class StatisticsViewController: UIViewController {
         super.viewDidLoad()
         
         let sel = #selector(StatisticsViewController.watchForNotifications(_:))
-        let centre = NSNotificationCenter.defaultCenter()
-        centre.addObserver(self, selector: sel, name: "gridModifyNotification", object: nil)
+        let center = NSNotificationCenter.defaultCenter()
+        center.addObserver(self, selector: sel, name: "gridModifyNotification", object: nil)
         
         calculateStatistics()
         
@@ -55,8 +55,8 @@ class StatisticsViewController: UIViewController {
         let cols = grid.cols
         let rows = grid.rows
         
-        for row in 0..<rows{
-            for col in 0..<cols{
+        for row in 0..<rows {
+            for col in 0..<cols {
                 switch grid[row, col] {
                 case .Born: numBorn += 1
                 case .Alive: numLiving += 1

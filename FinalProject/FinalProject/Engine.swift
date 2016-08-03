@@ -27,7 +27,6 @@ protocol EngineProtocol {
 class StandardEngine: EngineProtocol {
     
     static var _sharedInstance: StandardEngine = StandardEngine(20, 20)
-    
     static var sharedInstance: StandardEngine {
         get {
             return _sharedInstance
@@ -36,28 +35,25 @@ class StandardEngine: EngineProtocol {
     
     var grid: GridProtocol
     
+    // Declaring rows and columns
     var rows: Int = 20 {
         didSet {
             grid = Grid(self.rows, self.cols) { _,_ in .Empty }
             if let delegate = delegate { delegate.engineDidUpdate(grid) }
-            //NSNotificationCenter.defaultCenter().postNotificationName("gridModifyNotification", object: nil, userInfo: nil)
         }
     }
     var cols: Int = 20 {
         didSet {
             grid = Grid(self.rows, self.cols) { _,_ in .Empty }
             if let delegate = delegate { delegate.engineDidUpdate(grid) }
-            //NSNotificationCenter.defaultCenter().postNotificationName("gridModifyNotification", object: nil, userInfo: nil)
         }
     }
     
-    //used to detect the changes made by user at the embed grid view
-    var changesDetect: Bool = false
-    
+    // Checks for any changes in the embedded grid
+    var checkChanges: Bool = false
+    // Checks if the grid is a paused state or running
     var isPaused: Bool = false
-    
     weak var delegate: EngineDelegate?
-    
     var refreshRate: Float = 0.0
     var refreshTimer: NSTimer?
     
@@ -82,8 +78,7 @@ class StandardEngine: EngineProtocol {
                                                                       selector: sel,
                                                                       userInfo: nil,
                                                                       repeats: true)
-            }
-            else if let timer = refreshTimer {
+            } else if let timer = refreshTimer {
                 timer.invalidate()
                 self.refreshTimer = nil
             }
