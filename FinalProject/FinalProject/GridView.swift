@@ -41,9 +41,9 @@ class GridView: UIView {
     
 
     // IBInspectables are not imperative in this Assignent 
-    var livingColor: UIColor = UIColor.greenColor()
+    var livingColor: UIColor = UIColor.blueColor()
     var emptyColor: UIColor = UIColor.grayColor()
-    var bornColor: UIColor = UIColor.greenColor().colorWithAlphaComponent(0.6)
+    var bornColor: UIColor = UIColor.blueColor().colorWithAlphaComponent(0.6)
     var diedColor: UIColor = UIColor.grayColor().colorWithAlphaComponent(0.6)
     var gridColor: UIColor = UIColor.blackColor()
     var gridWidth: CGFloat = 2.0
